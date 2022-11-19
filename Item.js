@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet } from "react-native";
-
+import Feature from './Feature'
 
 function Item(props){
     
@@ -8,10 +8,14 @@ function Item(props){
     const { breed } = data
     const keys = Object.keys(data).filter(key => key!== 'breed')
 
+    const average = (keys.reduce((acc, key)=>{
+        return acc + data[key]
+    }, 0)/ keys.length).toFixed(1)
+
     return(
         <View style={style.container}>
-            <Text style={style.label}>{index}: {breed}</Text>
-            {keys.map( key => <Text>{key} {data[key]}</Text>)}
+            <Text style={style.label}>{index}: {breed} {average}</Text>
+            {keys.map( key => <Feature name={key} value={data[key]}/>)}
         </View>
     )
 }
